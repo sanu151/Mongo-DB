@@ -434,7 +434,7 @@ CRUD stands for **Create, Read, Update, and Delete**. These are fundamental oper
 * **Query Operators:** MongoDB provides a rich set of query operators (e.g., `$gt`, `$lt`, `$in`, `$regex`) for complex filtering.
 * **Update Operators:** Update operators (e.g., `$set`, `$inc`, `$push`) allow you to modify specific fields within documents.
 
-#### Example of Crate Database, Collection, and insert Data
+#### Example of Crate Database, Collection, insert, and find Data
 
 ```javaScript
 > use usersDB
@@ -460,5 +460,36 @@ DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany
   acknowledged: true,
   insertedIds: { '0': ObjectId("6785f0abad4aef8a084c6fc6") }
 }
+usersDB>  db.users.find()
+[
+  {
+    _id: ObjectId("6785efa4ad4aef8a084c6fc3"),
+    name: 'Supriyo Das',
+    age: 37,
+    email: 'das.supriyo07@gmail.com',
+    languages: [ 'Bangla', 'English', 'Hindi' ]
+  },
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc4"),
+    name: 'Rupa Das',
+    age: 27,
+    email: 'das.rupa2608@gmail.com',
+    languages: [ 'Bangla', 'Hindi' ]
+  },
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc5"),
+    name: 'Rishika Das',
+    age: 6,
+    email: '',
+    languages: [ 'Bangla' ]
+  },
+  {
+    _id: ObjectId("6785f0abad4aef8a084c6fc6"),
+    name: 'Sandhya Das',
+    age: 55,
+    email: '',
+    languages: [ 'Bangla' ]
+  }
+]
 usersDB>
 ```
