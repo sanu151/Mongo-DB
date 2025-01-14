@@ -598,4 +598,3 @@ Would output the first three documents in a readable format:
 }
 ```
 
-
