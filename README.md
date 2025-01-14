@@ -598,7 +598,7 @@ Would output the first three documents in a readable format:
 }
 ```
 
-#### Example of Update Data
+#### Example of Update and Delete Data
 
 ```javaScript
 usersDB>  db.users.update({name: "Rishika Das"}, {$set: {age: 7}})
