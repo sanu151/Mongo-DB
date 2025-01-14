@@ -528,7 +528,7 @@ usersDB> db.users.find({languages: ["Bangla"]}).limit(1)
     languages: [ 'Bangla' ]
   }
 ]
-usersDB>
+
 ```
 
 **In MongoDB, `pretty()` and `limit()` are methods used to control the output of query results.**
@@ -598,3 +598,28 @@ Would output the first three documents in a readable format:
 }
 ```
 
+#### Example of Update Data
+
+```javaScript
+usersDB>  db.users.update({name: "Rishika Das"}, {$set: {age: 7}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+usersDB> db.users.find({name: "Rishika Das"})
+[
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc5"),
+    name: 'Rishika Das',
+    age: 7,
+    email: '',
+    languages: [ 'Bangla' ]
+  }
+]
+usersDB>
+
+```
