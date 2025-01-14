@@ -90,7 +90,7 @@ MongoDB is widely used in various applications, including:
   * Refer to the official MongoDB documentation for the most up-to-date and detailed installation and setup instructions.
 
 
-Certainly, here's a table of common MongoDB shell commands with examples and descriptions:
+### Table of common MongoDB shell commands with examples and descriptions:
 
 | Command | Description | Example |
 |---|---|---|
