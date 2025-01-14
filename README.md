@@ -491,5 +491,15 @@ usersDB>  db.users.find()
     languages: [ 'Bangla' ]
   }
 ]
+usersDB> db.users.find({name: "Supriyo Das"}).pretty()
+[
+  {
+    _id: ObjectId("6785efa4ad4aef8a084c6fc3"),
+    name: 'Supriyo Das',
+    age: 37,
+    email: 'das.supriyo07@gmail.com',
+    languages: [ 'Bangla', 'English', 'Hindi' ]
+  }
+]
 usersDB>
 ```
