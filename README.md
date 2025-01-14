@@ -620,6 +620,32 @@ usersDB> db.users.find({name: "Rishika Das"})
     languages: [ 'Bangla' ]
   }
 ]
+usersDB>  db.users.deleteOne({name: "Sandhya Das"})
+{ acknowledged: true, deletedCount: 1 }
+usersDB> db.users.find()
+[
+  {
+    _id: ObjectId("6785efa4ad4aef8a084c6fc3"),
+    name: 'Supriyo Das',
+    age: 37,
+    email: 'das.supriyo07@gmail.com',
+    languages: [ 'Bangla', 'English', 'Hindi' ]
+  },
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc4"),
+    name: 'Rupa Das',
+    age: 27,
+    email: 'das.rupa2608@gmail.com',
+    languages: [ 'Bangla', 'Hindi' ]
+  },
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc5"),
+    name: 'Rishika Das',
+    age: 7,
+    email: '',
+    languages: [ 'Bangla' ]
+  }
+]
 usersDB>
 
 ```
