@@ -501,5 +501,101 @@ usersDB> db.users.find({name: "Supriyo Das"}).pretty()
     languages: [ 'Bangla', 'English', 'Hindi' ]
   }
 ]
+usersDB>  db.users.find({languages: ["Bangla"]})
+[
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc5"),
+    name: 'Rishika Das',
+    age: 6,
+    email: '',
+    languages: [ 'Bangla' ]
+  },
+  {
+    _id: ObjectId("6785f0abad4aef8a084c6fc6"),
+    name: 'Sandhya Das',
+    age: 55,
+    email: '',
+    languages: [ 'Bangla' ]
+  }
+]
+usersDB> db.users.find({languages: ["Bangla"]}).limit(1)
+[
+  {
+    _id: ObjectId("6785f053ad4aef8a084c6fc5"),
+    name: 'Rishika Das',
+    age: 6,
+    email: '',
+    languages: [ 'Bangla' ]
+  }
+]
 usersDB>
 ```
+
+**In MongoDB, `pretty()` and `limit()` are methods used to control the output of query results.**
+
+* **`pretty()`:** 
+
+    - **Purpose:** Formats the output of query results in a more readable and indented manner. 
+    - **Usage:**
+        ```javascript
+        db.collectionName.find().pretty() 
+        ```
+
+* **`limit()`:**
+
+    - **Purpose:** Specifies the maximum number of documents that should be returned in the query result. 
+    - **Usage:**
+        ```javascript
+        db.collectionName.find().limit(10) // Limits the result to 10 documents
+        ```
+
+**Combining `pretty()` and `limit()`:**
+
+You can combine these methods to get nicely formatted output with a limited number of documents:
+
+```javascript
+db.collectionName.find().limit(5).pretty() 
+```
+
+This will return the first 5 documents from the `collectionName` in a nicely formatted, indented JSON structure.
+
+**Example:**
+
+Let's say you have a collection called "customers" with the following documents:
+
+```json
+{ "_id" : ObjectId("..."), "name" : "Alice", "age" : 30 }
+{ "_id" : ObjectId("..."), "name" : "Bob", "age" : 25 }
+{ "_id" : ObjectId("..."), "name" : "Charlie", "age" : 35 }
+{ "_id" : ObjectId("..."), "name" : "David", "age" : 28 }
+{ "_id" : ObjectId("..."), "name" : "Eve", "age" : 22 }
+{ "_id" : ObjectId("..."), "name" : "Frank", "age" : 40 } 
+```
+
+The following command:
+
+```javascript
+db.customers.find().limit(3).pretty()
+```
+
+Would output the first three documents in a readable format:
+
+```json
+{
+        "_id" : ObjectId("..."),
+        "name" : "Alice",
+        "age" : 30
+}
+{
+        "_id" : ObjectId("..."),
+        "name" : "Bob",
+        "age" : 25
+}
+{
+        "_id" : ObjectId("..."),
+        "name" : "Charlie",
+        "age" : 35
+}
+```
+
+
