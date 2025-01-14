@@ -436,7 +436,7 @@ CRUD stands for **Create, Read, Update, and Delete**. These are fundamental oper
 
 #### Example of Crate Database, Collection, and insert Data
 
-```mongoSh
+```javaScript
 > use usersDB
 switched to db usersDB
 usersDB> db.createCollection("users")
