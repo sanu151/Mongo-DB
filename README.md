@@ -650,6 +650,7 @@ usersDB>
 
 ```
 
+## MongoDB using Compass
 
 To perform CRUD (Create, Read, Update, Delete) operations in MongoDB using Compass, you can: connect to your database, navigate to the desired collection, and then use the "Add Data" button to insert new documents (Create), use the filter bar to query and view existing documents (Read), click on a document to edit its fields (Update), and use the "Delete" option to remove documents from the collection (Delete). 
 
