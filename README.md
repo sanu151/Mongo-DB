@@ -654,8 +654,9 @@ usersDB>
 
 To perform CRUD (Create, Read, Update, Delete) operations in MongoDB using Compass, you can: connect to your database, navigate to the desired collection, and then use the "Add Data" button to insert new documents (Create), use the filter bar to query and view existing documents (Read), click on a document to edit its fields (Update), and use the "Delete" option to remove documents from the collection (Delete). 
 
-Detailed steps:      
-1. Connect to MongoDB:     
+#### Detailed steps:  
+
+**1. Connect to MongoDB:**     
 
 • Open MongoDB Compass.   
 • Click "New Connection" and enter your database connection details (hostname, port, username, password).   
@@ -663,7 +664,7 @@ Detailed steps:
 ![image](https://github.com/user-attachments/assets/1931f6e7-af36-496e-8272-b221f9a86323)
 
 
-2. Create (Insert) a document:   
+**2. Create (Insert) a document:**   
 
 • Select the desired database and collection. 
 • Click "Add Data" > "Insert Document". 
@@ -676,7 +677,7 @@ Detailed steps:
 ![image](https://github.com/user-attachments/assets/63c476b9-7668-451f-b72d-cf603124d4fe)
 
 
-3. Read (Query) documents:   
+**3. Read (Query) documents:**   
 
 • Use the filter bar to specify search criteria (e.g., "name: 'John'"). 
 • You can use operators like "$gt", "$lt", "$in" to create complex queries.   
@@ -684,7 +685,7 @@ Detailed steps:
 ![image](https://github.com/user-attachments/assets/d9cd05bd-1d2e-4e94-856e-3948f8dd0a2a)
 
 
-4. Update a document:   
+**4. Update a document:**   
 
 • Click on the document you want to modify. 
 • Edit the desired fields directly in the document view. 
@@ -697,7 +698,7 @@ Detailed steps:
 ![image](https://github.com/user-attachments/assets/ff9efe4a-8e5f-4bb4-aedb-4cc5fe6f040a)
 
 
-5. Delete a document:   
+**5. Delete a document:**   
 * Select the document you want to delete and Click the "Delete" button.
 
 ![image](https://github.com/user-attachments/assets/2dbc404a-b796-4715-a1c4-dd388cbefd8c)
@@ -707,7 +708,7 @@ Detailed steps:
 ![image](https://github.com/user-attachments/assets/b181f01d-ef70-44d1-b846-ecfb1e9bccde)
 
  
-Key points about using MongoDB Compass for CRUD:   
+**Key points about using MongoDB Compass for CRUD:**   
 
 • Visual interface: Compass provides a user-friendly graphical interface to manage your data, making it easier to understand and manipulate documents compared to raw MongoDB shell commands. 
 • Data validation: Compass can help identify potential data inconsistencies by displaying data types and structures visually. 
