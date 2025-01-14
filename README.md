@@ -3,7 +3,7 @@
 
 
 # Mongo-DB
-A popular open-source NoSQL database
+*A popular open-source NoSQL database*
 
 
 The official website of MongoDB is **[https://www.mongodb.com/](https://www.mongodb.com/)**
@@ -17,7 +17,7 @@ You can find a wealth of information there, including:
 * **Support:** Find support resources, including FAQs and contact information.
 
 
-MongoDB is a popular open-source NoSQL database known for its flexibility and scalability. Here's a breakdown:
+**MongoDB is a popular open-source NoSQL database known for its flexibility and scalability.**
 
 **Key Characteristics:**
 
