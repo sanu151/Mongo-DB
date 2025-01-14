@@ -118,3 +118,304 @@ MongoDB is widely used in various applications, including:
 
 This table provides a basic overview of common MongoDB shell commands. For more advanced usage and detailed information, refer to the official MongoDB documentation.
 
+### Start Mongo DB server
+
+**1. Using the `mongod` command**
+
+* **Open a terminal or command prompt.**
+* **Navigate to the MongoDB bin directory.** 
+    * On Windows: `cd C:\Program Files\MongoDB\Server\<version>\bin`
+    * On macOS/Linux: `cd /usr/local/bin/` (or the directory where you installed MongoDB)
+* **Run the `mongod` command.** 
+
+   ```bash
+   mongod 
+   ```
+
+   * This starts the MongoDB server with default settings.
+
+* **(Optional) Specify a configuration file:**
+
+   ```bash
+   mongod -f <path/to/mongod.conf> 
+   ```
+
+   * Replace `<path/to/mongod.conf>` with the actual path to your MongoDB configuration file. This allows for more advanced configurations like data directory, port, and authentication settings.
+
+**2. As a Windows Service**
+
+* **If you installed MongoDB as a Windows service:**
+    * Open the **Services** window (search for "services.msc" in the Start menu).
+    * Locate the "MongoDB" service.
+    * Right-click on the service and select **"Start"**.
+
+**3. Using a systemd service (Linux)**
+
+* **If you're using a systemd-based Linux distribution:**
+    * Enable and start the MongoDB service:
+
+       ```bash
+       sudo systemctl enable mongod 
+       sudo systemctl start mongod
+       ```
+
+**4. Verify Server Status**
+
+* **Check the MongoDB logs:** Look for messages indicating a successful server startup.
+* **Try connecting to the MongoDB shell:** 
+    * Open a new terminal/command prompt.
+    * Run: `mongo` 
+    * If the connection is successful, you'll be presented with the MongoDB shell prompt.
+
+**Important Notes:**
+
+* **Data Directory:** Make sure you have created a data directory for MongoDB to store its data files. The default location is usually `data/db` within the MongoDB installation directory.
+* **Firewall Rules:** If you're accessing MongoDB from another machine, ensure that your firewall rules allow connections to the MongoDB port (default is 27017).
+* **Security:** For production environments, always enable authentication and authorization to secure your MongoDB server.
+
+### The `show dbs` command in the MongoDB shell is used to list all the available databases in your MongoDB instance. 
+
+**Here's how it works:**
+
+1. **Open the MongoDB Shell:**
+   - Launch the MongoDB shell by typing `mongosh` in your terminal or command prompt.
+
+2. **Execute the command:**
+   - Type `show dbs` and press Enter.
+
+**Output:**
+
+The command will display a list of databases, usually including:
+
+- `admin`: A special database for administrative commands.
+- `config`: Used by the MongoDB replica set to store configuration information.
+- `local`: Stores local server-side data.
+- Any other databases you have created.
+
+**Example:**
+
+```
+> show dbs
+admin
+config
+local
+myDatabase1
+myDatabase2 
+```
+
+**Note:**
+
+- The `show dbs` command only lists databases that have data in them. Empty databases may not be displayed.
+- To switch to a specific database, use the `use <database_name>` command. For example: `use myDatabase1`
+
+
+
+### Create Database and insert data
+
+In MongoDB, you don't explicitly create a database with a dedicated command. Instead, databases are created dynamically when you start inserting data into a collection within them. 
+
+Here's how it works:
+
+1. **Start the MongoDB Shell:**
+   - Open your terminal or command prompt and type `mongosh` to start the MongoDB shell.
+
+2. **Select or Create a Database (Implicitly):**
+   - Use the `use <database_name>` command to select a database. If the database doesn't exist, MongoDB will create it for you. 
+
+     ```javascript
+     use myDatabase 
+     ```
+
+3. **Insert Data:**
+   - Create a collection and insert data into it. This action will automatically create the database if it doesn't already exist.
+
+     ```javascript
+     db.myCollection.insertOne({ name: "John Doe", age: 30 }) 
+     ```
+
+4. **Verify Database Creation:**
+   - Use the `show dbs` command to list all available databases. You should now see your newly created database in the list.
+
+     ```javascript
+     show dbs 
+     ```
+
+**Key Points:**
+
+- Databases are created on-demand when you start inserting data into them.
+- The `use <database_name>` command selects a database and implicitly creates it if it doesn't exist.
+- MongoDB's dynamic nature makes database creation straightforward and efficient.
+
+### In the MongoDB shell, the command to list all collections within the currently selected database is:
+
+```
+show collections
+```
+
+**Here's how it works:**
+
+1. **Connect to MongoDB:**
+   - Open your terminal or command prompt and start the MongoDB shell by typing `mongosh`.
+
+2. **Select a Database:**
+   - Use the `use <database_name>` command to select the database you want to list collections for. 
+
+     ```javascript
+     use myDatabase 
+     ```
+
+3. **List Collections:**
+   - Type `show collections` and press Enter. This will display a list of all collections within the selected database.
+
+**Example:**
+
+```
+> use myDatabase
+switched to db myDatabase
+> show collections
+myCollection1
+myCollection2 
+```
+
+**Alternative:**
+
+You can also use the `db.getCollectionNames()` method:
+
+```javascript
+> db.getCollectionNames()
+[ "myCollection1", "myCollection2" ]
+```
+
+This method returns an array of collection names, which can be more convenient for programmatic use.
+
+### **Dropping a Database in MongoDB**
+
+The `db.dropDatabase()` command in the MongoDB shell is used to permanently delete the currently selected database and all of its associated collections and data. 
+
+**Here's the process:**
+
+1. **Start the MongoDB Shell:**
+   - Open your terminal or command prompt and type `mongosh` to start the MongoDB shell.
+
+2. **Select the Database:**
+   - Use the `use <database_name>` command to select the specific database you want to drop. 
+
+     ```javascript
+     use myDatabase 
+     ```
+
+3. **Drop the Database:**
+   - Execute the `db.dropDatabase()` command.
+
+     ```javascript
+     db.dropDatabase() 
+     ```
+
+4. **Verify Deletion:**
+   - Use the `show dbs` command to confirm that the database has been successfully removed from the list.
+
+     ```javascript
+     show dbs 
+     ```
+
+**Important Considerations:**
+
+* **Irreversible:** Dropping a database is an irreversible action. **Always back up your data** before dropping any database.
+* **Caution:** Use this command with caution, as it will permanently delete all data within the specified database.
+
+**Example:**
+
+```javascript
+> use myDatabase 
+switched to db myDatabase
+> db.dropDatabase()
+{ "dropped" : "myDatabase", "ok" : 1 }
+> show dbs
+admin
+config
+local 
+```
+
+In this example, we first select the `myDatabase` and then execute `db.dropDatabase()`. The output confirms that the database has been dropped, and the subsequent `show dbs` command does not list `myDatabase` anymore.
+
+**CRUD Operations in MongoDB**
+
+CRUD stands for **Create, Read, Update, and Delete**. These are fundamental operations for interacting with data in any database system, and MongoDB provides efficient methods for performing these actions.
+
+**1. Create**
+
+* **`insertOne()`:** Inserts a single document into a collection.
+
+   ```javascript
+   db.myCollection.insertOne({ name: "John Doe", age: 30 }) 
+   ```
+
+* **`insertMany()`:** Inserts multiple documents into a collection.
+
+   ```javascript
+   db.myCollection.insertMany([
+       { name: "Jane Doe", age: 25 }, 
+       { name: "Peter Jones", age: 35 } 
+   ])
+   ```
+
+**2. Read**
+
+* **`find()`:** Retrieves all documents that match a specified query (or all documents if no query is provided).
+
+   ```javascript
+   db.myCollection.find() // Retrieves all documents
+   db.myCollection.find({ age: { $gt: 30 } }) // Retrieves documents where age is greater than 30
+   ```
+
+* **`findOne()`:** Retrieves the first document that matches the query (or null if no match).
+
+   ```javascript
+   db.myCollection.findOne({ name: "John Doe" }) 
+   ```
+
+* **`countDocuments()`:** Counts the number of documents that match a specified query.
+
+   ```javascript
+   db.myCollection.countDocuments({ age: { $gt: 30 } }) 
+   ```
+
+**3. Update**
+
+* **`updateOne()`:** Updates a single document that matches the filter.
+
+   ```javascript
+   db.myCollection.updateOne({ name: "John Doe" }, { $set: { age: 31 } }) 
+   ```
+
+* **`updateMany()`:** Updates multiple documents that match the filter.
+
+   ```javascript
+   db.myCollection.updateMany({ age: { $lt: 30 } }, { $set: { isYoung: true } }) 
+   ```
+
+**4. Delete**
+
+* **`deleteOne()`:** Deletes a single document that matches the filter.
+
+   ```javascript
+   db.myCollection.deleteOne({ name: "John Doe" }) 
+   ```
+
+* **`deleteMany()`:** Deletes multiple documents that match the filter.
+
+   ```javascript
+   db.myCollection.deleteMany({ age: { $lt: 25 } }) 
+   ```
+
+* **`drop()`:** Deletes the entire collection.
+
+   ```javascript
+   db.myCollection.drop() 
+   ```
+
+**Key Concepts:**
+
+* **Query Operators:** MongoDB provides a rich set of query operators (e.g., `$gt`, `$lt`, `$in`, `$regex`) for complex filtering.
+* **Update Operators:** Update operators (e.g., `$set`, `$inc`, `$push`) allow you to modify specific fields within documents.
+
