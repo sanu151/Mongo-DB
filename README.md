@@ -715,3 +715,148 @@ To perform CRUD (Create, Read, Update, Delete) operations in MongoDB using Compa
 • Bulk operations: You can perform bulk insert, update, and delete operations on multiple documents at once.   
 
 
+## MongoDB database save data in database using express and mongoose
+
+Certainly, here's a simple example demonstrating how to use MongoDB with Express.js, Nodemon, and Mongoose, incorporating schemas, models, and a POST method for creating products using Postman.
+
+**1. Project Setup**
+
+*   Create a new directory for your project.
+*   Open your terminal, navigate to the project directory, and initialize a Node.js project:
+
+    ```bash
+    npm init -y
+    ```
+
+*   Install necessary packages:
+
+    ```bash
+    npm install express mongoose nodemon cors 
+    ```
+
+**2. Create `server.js`**
+
+```javascript
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const productRoutes = require('./routes/productRoutes'); 
+
+const app = express();
+const port = process.env.PORT || 5000; 
+
+// Middleware
+app.use(cors());
+app.use(express.json()); 
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/your_db_name', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.error(err));
+
+// Use Routes
+app.use('/api/products', productRoutes);
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+```
+
+**3. Create `productRoutes.js`**
+
+```javascript
+const express = require('express');
+const router = express.Router();
+const Product = require('../models/Product'); // Import Product model
+
+// Create a new product
+router.post('/', async (req, res) => {
+  try {
+    const { product, price, description } = req.body;
+
+    const newProduct = new Product({
+      product,
+      price,
+      description,
+      createdAt: Date.now(),
+    });
+
+    const savedProduct = await newProduct.save();
+    res.status(201).json(savedProduct); 
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+module.exports = router;
+```
+
+**4. Create `Product.js` (Model)**
+
+```javascript
+const mongoose = require('mongoose');
+
+const productSchema = new mongoose.Schema({
+  product: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = mongoose.model('Product', productSchema);
+```
+
+**5. Start the Server**
+
+*   Use `nodemon` to automatically restart the server on file changes:
+
+    ```bash
+    nodemon server.js
+    ```
+
+**6. Use Postman to Create a Product**
+
+*   **Create a POST request** to `http://localhost:5000/api/products`
+*   **Set the request body** as JSON:
+
+    ```json
+    {
+      "product": "Example Product",
+      "price": 19.99,
+      "description": "This is an example product description."
+    }
+    ```
+
+*   **Send the request** and verify that the server responds with a 201 status code and the created product data in the response body.
+
+**Explanation:**
+
+*   **Express.js:** Used to create the web server and handle HTTP requests.
+*   **Mongoose:** Provides an Object Data Modeling (ODM) library for MongoDB, simplifying interactions with the database.
+*   **Nodemon:** Automatically restarts the server whenever you make changes to your code.
+*   **CORS:** Enables Cross-Origin Resource Sharing, allowing requests from different origins (e.g., frontend applications).
+*   **Schema:** Defines the structure of the `Product` documents in the MongoDB collection.
+*   **Model:** Creates a `Product` model based on the schema, providing methods to interact with the database.
+*   **POST Route:** Handles the creation of new products by:
+    *   Extracting data from the request body.
+    *   Creating a new `Product` instance.
+    *   Saving the document to the database.
+    *   Sending a success response with the created product data.
+
+
+
