@@ -717,7 +717,7 @@ To perform CRUD (Create, Read, Update, Delete) operations in MongoDB using Compa
 
 ## MongoDB database save data in database using express and mongoose
 
-Certainly, here's a simple example demonstrating how to use MongoDB with Express.js, Nodemon, and Mongoose, incorporating schemas, models, and a POST method for creating products using Postman.
+### How to use MongoDB with Express.js, Nodemon, and Mongoose, incorporating schemas, models, and a POST method for creating products using Postman.
 
 **1. Project Setup**
 
