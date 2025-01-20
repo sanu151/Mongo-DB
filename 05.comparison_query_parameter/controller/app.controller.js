@@ -23,7 +23,9 @@ exports.sendData = async (req, res) => {
 exports.receiveData = async (req, res) => {
   try {
     const price = req.query.price;
-    const allProduct = await dbModel.find({ price: { $gt: price } });
+    let allProduct;
+    if (price) allProduct = await dbModel.find({ price: { $gt: price } });
+    else allProduct = await dbModel.find();
     res.status(200).send(allProduct);
   } catch (error) {
     res.status(500).send(error.message);
