@@ -889,3 +889,104 @@ This example provides a comprehensive implementation of CRUD operations for a Pr
 *   **Pagination:** Implement pagination to handle large datasets.
 *   **Search and filtering:** Add search and filtering capabilities using Mongoose query operators.
 *   **Security measures:** Implement appropriate security measures, such as authentication and authorization.
+
+### **Comparison Query Operators in MongoDB**
+
+Comparison query operators in MongoDB allow you to filter documents based on comparisons between field values and specified values. Here are some of the most commonly used operators:
+
+**1. `$eq` (Equal to)**
+
+*   Matches values that are equal to a specified value.
+
+    ```javascript
+    db.collectionName.find({ age: { $eq: 30 } }) 
+    ```
+
+**2. `$ne` (Not Equal to)**
+
+*   Matches all values that are not equal to a specified value.
+
+    ```javascript
+    db.collectionName.find({ age: { $ne: 30 } }) 
+    ```
+
+**3. `$gt` (Greater Than)**
+
+*   Matches values that are greater than a specified value.
+
+    ```javascript
+    db.collectionName.find({ age: { $gt: 30 } }) 
+    ```
+
+**4. `gte` (Greater Than or Equal To)**
+
+*   Matches values that are greater than or equal to a specified value.
+
+    ```javascript
+    db.collectionName.find({ age: { $gte: 30 } }) 
+    ```
+
+**5. `lt` (Less Than)**
+
+*   Matches values that are less than a specified value.
+
+    ```javascript
+    db.collectionName.find({ age: { $lt: 30 } }) 
+    ```
+
+**6. `lte` (Less Than or Equal To)**
+
+*   Matches values that are less than or equal to a specified value.
+
+    ```javascript
+    db.collectionName.find({ age: { $lte: 30 } }) 
+    ```
+
+**7. `in`**
+
+*   Matches any of the values specified in an array.
+
+    ```javascript
+    db.collectionName.find({ age: { $in: [25, 30, 35] } }) 
+    ```
+
+**8. `nin` (Not In)**
+
+*   Matches none of the values specified in an array.
+
+    ```javascript
+    db.collectionName.find({ age: { $nin: [25, 30, 35] } }) 
+    ```
+
+**Example:**
+
+Let's say you have a collection named "products" with the following documents:
+
+```json
+{ "_id" : 1, "name" : "Product A", "price" : 50 }
+{ "_id" : 2, "name" : "Product B", "price" : 30 }
+{ "_id" : 3, "name" : "Product C", "price" : 70 }
+{ "_id" : 4, "name" : "Product D", "price" : 30 }
+```
+
+**To find products with a price greater than 40:**
+
+```javascript
+db.products.find({ price: { $gt: 40 } }) 
+```
+
+**To find products with a price between 20 and 50 (inclusive):**
+
+```javascript
+db.products.find({ price: { $gte: 20, $lte: 50 } }) 
+```
+
+**To find products with a price that is not 30:**
+
+```javascript
+db.products.find({ price: { $ne: 30 } }) 
+```
+
+These comparison operators provide powerful ways to filter data in your MongoDB collections based on various criteria.
+
+
