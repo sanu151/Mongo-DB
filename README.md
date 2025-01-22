@@ -990,3 +990,97 @@ db.products.find({ price: { $ne: 30 } })
 These comparison operators provide powerful ways to filter data in your MongoDB collections based on various criteria.
 
 
+**Logical Query Operators in MongoDB**
+
+Logical query operators in MongoDB allow you to combine multiple conditions to create more complex and precise queries. They help you filter documents based on the logical relationships between different criteria.
+
+Here are the main logical operators:
+
+**1. `$and`**
+
+*   Matches documents that satisfy **all** the specified conditions.
+
+    ```javascript
+    db.collectionName.find({ 
+        $and: [ 
+            { age: { $gt: 30 } }, 
+            { city: "New York" } 
+        ] 
+    }) 
+    ```
+    This query finds documents where the age is greater than 30 **and** the city is "New York".
+
+**2. `$or`**
+
+*   Matches documents that satisfy **at least one** of the specified conditions.
+
+    ```javascript
+    db.collectionName.find({ 
+        $or: [ 
+            { age: { $gt: 30 } }, 
+            { city: "New York" } 
+        ] 
+    }) 
+    ```
+    This query finds documents where the age is greater than 30 **or** the city is "New York".
+
+**3. `$nor`**
+
+*   Matches documents that **do not** satisfy any of the specified conditions.
+
+    ```javascript
+    db.collectionName.find({ 
+        $nor: [ 
+            { age: { $gt: 30 } }, 
+            { city: "New York" } 
+        ] 
+    }) 
+    ```
+    This query finds documents where the age is not greater than 30 **and** the city is not "New York".
+
+**4. `$not`**
+
+*   Inverts the effect of a query expression.
+
+    ```javascript
+    db.collectionName.find({ 
+        age: { $not: { $gt: 30 } } 
+    }) 
+    ```
+    This query finds documents where the age is **not** greater than 30.
+
+**Example:**
+
+Let's say you have a collection named "customers" with the following documents:
+
+```json
+{ "_id" : 1, "name" : "Alice", "age" : 30, "city" : "New York" }
+{ "_id" : 2, "name" : "Bob", "age" : 25, "city" : "Los Angeles" }
+{ "_id" : 3, "name" : "Charlie", "age" : 35, "city" : "New York" }
+{ "_id" : 4, "name" : "David", "age" : 28, "city" : "Chicago" }
+```
+
+**To find customers who are older than 30 and live in New York:**
+
+```javascript
+db.customers.find({ 
+    $and: [ 
+        { age: { $gt: 30 } }, 
+        { city: "New York" } 
+    ] 
+}) 
+```
+
+**To find customers who are older than 30 or live in New York:**
+
+```javascript
+db.customers.find({ 
+    $or: [ 
+        { age: { $gt: 30 } }, 
+        { city: "New York" } 
+    ] 
+}) 
+```
+
+By using these logical operators, you can create complex and flexible queries to efficiently retrieve the data you need from your MongoDB collections.
+
