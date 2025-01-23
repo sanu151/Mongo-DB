@@ -1084,3 +1084,84 @@ db.customers.find({
 
 By using these logical operators, you can create complex and flexible queries to efficiently retrieve the data you need from your MongoDB collections.
 
+**1. Counting Documents**
+
+*   **`countDocuments()`:** This method returns the number of documents that match a specified query.
+
+    ```javascript
+    db.collectionName.countDocuments({ age: { $gt: 30 } }) 
+    ```
+    This counts the number of documents where the "age" field is greater than 30.
+
+*   **`count()`:** (Deprecated) This method is similar to `countDocuments()`, but it's recommended to use `countDocuments()` for new applications.
+
+**2. Sorting Documents**
+
+*   **`sort()`:** This method sorts the results of a query in ascending or descending order.
+
+    ```javascript
+    // Sort by age in ascending order
+    db.collectionName.find().sort({ age: 1 }) 
+
+    // Sort by age in descending order
+    db.collectionName.find().sort({ age: -1 }) 
+
+    // Sort by multiple fields
+    db.collectionName.find().sort({ age: 1, name: -1 }) 
+    ```
+    In the sort specification:
+        *   `1` indicates ascending order.
+        *   `-1` indicates descending order.
+
+**3. Selecting Fields (Projection)**
+
+*   **`find()` with projection:** You can specify which fields to include or exclude from the result using the projection option.
+
+    ```javascript
+    // Include only the "name" and "age" fields
+    db.collectionName.find({}, { name: 1, age: 1 }) 
+
+    // Exclude the "_id" field
+    db.collectionName.find({}, { _id: 0 }) 
+
+    // Include only the "name" field
+    db.collectionName.find({}, { name: 1, _id: 0 }) 
+    ```
+    *   `1` indicates that the field should be included in the result.
+    *   `0` indicates that the field should be excluded from the result.
+
+**Example**
+
+Let's say you have a collection named "products" with the following documents:
+
+```json
+{ "_id" : 1, "name" : "Product A", "price" : 50, "category" : "Electronics" }
+{ "_id" : 2, "name" : "Product B", "price" : 30, "category" : "Clothing" }
+{ "_id" : 3, "name" : "Product C", "price" : 70, "category" : "Electronics" }
+{ "_id" : 4, "name" : "Product D", "price" : 30, "category" : "Books" }
+```
+
+**To find the total number of products:**
+
+```javascript
+db.products.countDocuments() 
+```
+
+**To find the number of products in the "Electronics" category:**
+
+```javascript
+db.products.countDocuments({ category: "Electronics" }) 
+```
+
+**To find the products sorted by price in ascending order:**
+
+```javascript
+db.products.find().sort({ price: 1 }) 
+```
+
+**To find the product names and prices:**
+
+```javascript
+db.products.find({}, { name: 1, price: 1, _id: 0 }) 
+```
+
