@@ -1365,3 +1365,69 @@ This table provides a comprehensive overview of Mongoose's built-in schema valid
 
 *   When saving a document with invalid data, Mongoose will throw a `ValidationError`. You can catch this error and handle it appropriately in your application (e.g., display error messages to the user).
 
+
+### **Custom Validation in Mongoose**
+
+Custom validation in Mongoose allows you to define specific rules for your schema fields beyond the built-in validators like `required`, `min`, `max`, etc. This provides flexibility to enforce unique business logic or complex validation requirements.
+
+**How to Define Custom Validators:**
+
+1. **Use the `validate()` method:**
+
+   ```javascript
+   const mongoose = require('mongoose');
+
+   const mySchema = new mongoose.Schema({
+       field1: {
+           type: String,
+           validate: {
+               validator: function(value) { 
+                   // Your custom validation logic here
+                   return value.startsWith('prefix_'); 
+               },
+               message: 'Field1 must start with "prefix_"' 
+           }
+       }
+   });
+   ```
+
+2. **Define the `validator` function:**
+
+   - This function receives the value of the field as its argument.
+   - It should return `true` if the value is valid and `false` otherwise.
+
+3. **Specify an error message:**
+
+   - The `message` property provides a custom error message that will be displayed if the validation fails.
+
+**Example:**
+
+* **Validating Email Format:**
+
+   ```javascript
+   const userSchema = new mongoose.Schema({
+       email: {
+           type: String,
+           required: true,
+           validate: {
+               validator: function(v) {
+                   // Simple email validation (basic check)
+                   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+               },
+               message: 'Please enter a valid email address'
+           }
+       }
+   });
+   ```
+
+**Key Considerations:**
+
+* **Asynchronous Validation:** If your validation logic involves asynchronous operations (e.g., checking external services, database lookups), you can use `async/await` within the validator function or return a Promise.
+* **Error Handling:** Handle validation errors appropriately in your application logic. You can catch the `ValidationError` thrown by Mongoose and display informative error messages to the user.
+
+**Benefits of Custom Validation:**
+
+* **Enforce Business Rules:** Implement specific rules that are unique to your application's requirements.
+* **Improve Data Quality:** Ensure that only valid data is stored in your database, leading to better data integrity and application stability.
+* **Provide Meaningful Error Messages:** Give users clear and helpful feedback when they enter invalid data.
+
