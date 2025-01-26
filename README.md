@@ -1165,3 +1165,160 @@ db.products.find().sort({ price: 1 })
 db.products.find({}, { name: 1, price: 1, _id: 0 }) 
 ```
 
+## Mongoose  built-in schema validation
+
+
+
+**1. Required Fields:**
+
+*   Specify fields that must have a value using the `required: true` option.
+
+```javascript
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true, // Name is required
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  // ... other fields
+});
+```
+
+**2. Data Type Validation:**
+
+*   Mongoose enforces data type validation by default. 
+*   If you attempt to save a document with a field value of an incorrect type, it will result in a validation error.
+
+```javascript
+// Example: Age must be a number
+const userSchema = new mongoose.Schema({
+  age: {
+    type: Number, 
+  },
+  // ... other fields
+});
+```
+
+**3. Custom Validation:**
+
+*   Define custom validation functions using the `validate()` method.
+
+```javascript
+const userSchema = new mongoose.Schema({
+  age: {
+    type: Number,
+    validate: {
+      validator: (v) => v >= 18, // Age must be greater than or equal to 18
+      message: 'Age must be greater than or equal to 18',
+    },
+  },
+  // ... other fields
+});
+```
+
+**4. Unique Values:**
+
+*   Ensure that a field has a unique value across all documents in the collection using the `unique: true` option.
+
+```javascript
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true, // Email must be unique
+  },
+  // ... other fields
+});
+```
+
+**5. Array Validation:**
+
+*   Validate the elements within an array using the `validate()` method.
+
+```javascript
+const productSchema = new mongoose.Schema({
+  tags: {
+    type: Array,
+    validate: {
+      validator: (arr) => arr.length > 0, // Array must have at least one element
+      message: 'Array of tags cannot be empty',
+    },
+  },
+});
+```
+
+**6. Enum (Enumerated Values):**
+
+*   Restrict the values of a field to a predefined set of options.
+
+```javascript
+const userSchema = new mongoose.Schema({
+  role: {
+    type: String,
+    enum: ['user', 'admin', 'moderator'], // Allowed roles
+    required: true,
+  },
+});
+```
+
+**7. Min/Max Length:**
+
+*   Enforce minimum and maximum length constraints on string fields.
+
+```javascript
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    minlength: 5, // Minimum length of 5 characters
+    maxlength: 20, // Maximum length of 20 characters
+    required: true,
+  },
+});
+```
+
+**Mongoose's built-in schema validation features:**
+
+| Validation Type | Description | Syntax | Example |
+|---|---|---|---|
+| **Required** | Ensures that a field must have a value. | `required: true` | `name: { type: String, required: true }` |
+| **Type** | Enforces the data type of the field. | `type: String`, `type: Number`, `type: Boolean`, `type: Date`, `type: ObjectId`, `type: Array`, `type: Object`, `type: Buffer`, `type: Mixed` | `age: { type: Number }` |
+| **Enum** | Restricts the field's value to a set of allowed options. | `enum: ['option1', 'option2', 'option3']` | `status: { type: String, enum: ['active', 'inactive', 'pending'] }` |
+| **Min Length** | Specifies the minimum length for string fields. | `minlength: <number>` | `username: { type: String, minlength: 5 }` |
+| **Max Length** | Specifies the maximum length for string fields. | `maxlength: <number>` | `password: { type: String, maxlength: 20 }` |
+| **Min** | Specifies the minimum allowed value for numbers. | `min: <number>` | `age: { type: Number, min: 18 }` |
+| **Max** | Specifies the maximum allowed value for numbers. | `max: <number>` | `rating: { type: Number, min: 0, max: 5 }` |
+| **Unique** | Ensures that the value of the field is unique across all documents in the collection. | `unique: true` | `email: { type: String, unique: true }` |
+| **Match** | Matches the field value against a regular expression. | `match: /<regex>/` | `email: { type: String, match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ }` |
+| **Custom Validation** | Allows you to define custom validation logic. | `validate: { validator: <function>, message: <string> }` | 
+  ```javascript
+  age: {
+    type: Number,
+    validate: {
+      validator: (v) => v >= 18, 
+      message: 'Age must be greater than or equal to 18' 
+    }
+  }
+  ```
+| **Array Validation** | Allows you to validate the elements within an array. | `validate: { validator: <function>, message: <string> }` | 
+  ```javascript
+  tags: {
+    type: Array,
+    validate: {
+      validator: (arr) => arr.length > 0,
+      message: 'Array of tags cannot be empty'
+    }
+  }
+  ```
+| **Required by Default** | All fields within a schema are required by default. | - | `name: { type: String }` (implicitly required) |
+
+This table provides a comprehensive overview of Mongoose's built-in schema validation features. By effectively utilizing these features, you can enhance the data integrity and reliability of your MongoDB applications.
+
+
+
+**Handling Validation Errors:**
+
+*   When saving a document with invalid data, Mongoose will throw a `ValidationError`. You can catch this error and handle it appropriately in your application (e.g., display error messages to the user).
+
