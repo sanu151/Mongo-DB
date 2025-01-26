@@ -1167,6 +1167,8 @@ db.products.find({}, { name: 1, price: 1, _id: 0 })
 
 ## Mongoose  built-in schema validation
 
+**Documentation: https://mongoosejs.com/docs/validation.html
+
 * All ***SchemaTypes*** have the built-in ***required*** validator. The required validator uses the ***SchemaType's*** `checkRequired()` function to determine if the value satisfies the required validator.   
 * ***Numbers*** have `min` and `max` validators.   
 * ***Strings*** have `enum`, `match`, `minLength`, and `maxLength` validators.   
