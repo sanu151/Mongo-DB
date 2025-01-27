@@ -1431,6 +1431,6 @@ Custom validation in Mongoose allows you to define specific rules for your schem
 * **Improve Data Quality:** Ensure that only valid data is stored in your database, leading to better data integrity and application stability.
 * **Provide Meaningful Error Messages:** Give users clear and helpful feedback when they enter invalid data.
 
-**Notes :** Regular Expression testing website [https://regexr.com/](https://regexr.com/)
+--- **Notes :** Regular Expression testing website [https://regexr.com/](https://regexr.com/) ---
 
 
