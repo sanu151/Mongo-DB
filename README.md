@@ -1433,3 +1433,128 @@ Custom validation in Mongoose allows you to define specific rules for your schem
 
 **Notes :** Regular Expression testing website [https://regexr.com/](https://regexr.com/)
 
+
+
+## Rest API without Database
+
+1. **Import Express:** 
+   - `const express = require('express');` imports the Express.js framework.
+
+2. **Create an Express App:** 
+   - `const app = express();` initializes an Express application instance.
+
+3. **Define Sample Data:** 
+   - An array `products` is created to store sample product data in memory.
+
+4. **Define Routes:**
+   - **`GET /products`:** Retrieves all products from the `products` array and sends them as JSON response.
+   - **`GET /products/:id`:** Retrieves a single product by its ID. If the product is found, it's returned as JSON. Otherwise, a 404 Not Found response is sent.
+   - **`POST /products`:** Creates a new product based on the data provided in the request body. A new ID is generated, and the product is added to the `products` array.
+   - **`PUT /products/:id`:** Updates an existing product with the provided data. If the product is found, it's updated with the new values. Otherwise, a 404 Not Found response is sent.
+   - **`DELETE /products/:id`:** Deletes a product by its ID. If the product is found, it's removed from the `products` array. Otherwise, a 404 Not Found response is sent.
+
+5. **Start the Server:** 
+   - `app.listen(port, ...)` starts the server and listens for incoming requests on the specified port.
+
+**Key Points:**
+
+- This is a simplified example and may not be suitable for production environments.
+- For real-world applications, you would typically use a database like MongoDB to store and manage your data.
+- This example demonstrates the basic principles of creating RESTful APIs with Express.js, including handling HTTP methods (GET, POST, PUT, DELETE) and sending JSON responses.
+- You can extend this example by adding more features such as:
+    - Pagination
+    - Filtering
+    - Sorting
+    - Authentication and authorization
+
+This provides a basic foundation for building REST APIs without a database using Express.js. You can adapt and expand this example based on your specific requirements.
+```javascript
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Sample data
+const products = [
+  { id: 1, name: 'Product 1', price: 10 },
+  { id: 2, name: 'Product 2', price: 20 },
+  { id: 3, name: 'Product 3', price: 15 },
+];
+
+// Middleware to parse request body
+app.use(express.json());
+
+// GET /products - Get all products
+app.get('/products', (req, res) => {
+  res.json(products);
+});
+
+// GET /products/:id - Get a single product by ID
+app.get('/products/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const product = products.find(p => p.id === id);
+
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).json({ message: 'Product not found' });
+  }
+});
+
+// POST /products - Create a new product
+app.post('/products', (req, res) => {
+  const newProduct = {
+    id: Date.now(), // Simple ID generation
+    name: req.body.name,
+    price: req.body.price,
+  };
+  products.push(newProduct);
+  res.status(201).json(newProduct);
+});
+
+// PUT /products/:id - Update a product
+app.put('/products/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const productIndex = products.findIndex(p => p.id === id);
+
+  if (productIndex !== -1) {
+    products[productIndex] = {
+      ...products[productIndex],
+      name: req.body.name || products[productIndex].name,
+      price: req.body.price || products[productIndex].price,
+    };
+    res.json(products[productIndex]);
+  } else {
+    res.status(404).json({ message: 'Product not found' });
+  }
+});
+
+// DELETE /products/:id - Delete a product
+app.delete('/products/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const productIndex = products.findIndex(p => p.id === id);
+
+  if (productIndex !== -1) {
+    products.splice(productIndex, 1);
+    res.json({ message: 'Product deleted successfully' });
+  } else {
+    res.status(404).json({ message: 'Product not found' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+```
+
+**Key improvements:**
+
+* **Middleware:** Added `app.use(express.json());` to parse incoming JSON request bodies for the POST and PUT routes.
+
+RESTful API for managing a simple in-memory product catalog without a database. You can expand this further by:
+
+- Implementing more robust error handling.
+- Adding input validation.
+- Using a more sophisticated ID generation strategy.
+- Integrating with a database (like MongoDB) for persistent data storage.
+
+This example provides a foundation for building more complex RESTful APIs with Express.js.
