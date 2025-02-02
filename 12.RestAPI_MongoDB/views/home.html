@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API with CRUD (MongoDB Atlas & Express.js) - Algorithm</title>
+</head>
+
+<body>
+    <h1>REST API with CRUD Operations (MongoDB Atlas & Express.js) - Algorithm</h1>
+    <hr>
+    <h2>Project Setup</h2>
+    <ul>
+        <li>Create a new project directory.</li>
+        <li>Initialize the project using <code>npm init -y</code>.</li>
+        <li>Install necessary dependencies: <code>npm install express mongoose cors dotenv</code></li>
+    </ul>
+    <h2>Create `.env` File</h2>
+    <p>Create a file named <code>.env</code> at the root of your project and add your MongoDB Atlas connection
+        string
+        inside it:</p>
+    <pre>MONGODB_URI=mongodb+srv://&lt;your_username&gt;:&lt;your_password&gt;@&lt;your_cluster_name&gt;.mongodb.net/&lt;your_database_name&gt;?retryWrites=true&w=majority</pre>
+    <p>Replace the placeholders with your actual MongoDB Atlas credentials.</p>
+    <h2>Create `server.js`</h2>
+    <p>Create a file named `server.js` and add the following code:</p>
+    <pre><code>
+      const express = require('express');
+      const mongoose = require('mongoose');
+      const cors = require('cors');
+      require('dotenv').config(); // Load environment variables
+    
+      const app = express();
+      const port = process.env.PORT || 5000;
+    
+      // Middleware
+      app.use(cors());
+      app.use(express.json());
+    
+      // Connect to MongoDB Atlas
+      mongoose.connect(process.env.MONGODB_URI, { 
+        useNewUrlParser: true, 
+        useUnifiedTopology: true 
+      })
+        .then(() => console.log('MongoDB Connected'))
+        .catch(err => console.error(err));
+    
+      // Define Product Schema (replace with your actual schema definition)
+      const productSchema = new mongoose.Schema({
+        name: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+      });
+    
+      const Product = mongoose.model('Product', productSchema);
+    
+      // Routes (replace with your actual CRUD operation routes)
+      app.get('/api/products', async (req, res) => { ... });
+      app.get('/api/products/:id', async (req, res) => { ... });
+      app.post('/api/products', async (req, res) => { ... });
+      app.put('/api/products/:id', async (req, res) => { ... });
+      app.delete('/api/products/:id', async (req, res) => { ... });
+    
+      app.listen(port, () => {
+        console.log(`Server listening on port ${port}`);
+      });
+      </code></pre>
+    <p>**Note:** Replace the placeholder schema definition and CRUD operation route implementations with your actual
+        logic.</p>
+    <h2>Create `Product.js` (Optional)</h2>
+    <p>If you prefer to separate the schema definition, create a file named `Product.js` with the following code:
+    </p>
+    <pre><code>
+      const mongoose = require('mongoose');
+    
+      const productSchema = new mongoose.Schema({
+        name: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+      });
+    
+      module.exports = mongoose.model('Product', productSchema);
+      </code></pre>
+    <p>Import the `Product` model in `server.js` if you choose to create this file.</p>
+    <h2>Start the Server</h2>
+    <p>Run the following command in your terminal to start the server:</p>
+    <pre><code>nodemon server.js</code></pre>
+    <h2>Test the API</h2>
+    <ul>
+        <li>Use tools like Postman or cURL to test the API endpoints.</li>
+    </ul>
+    <p>
+        This provides a clear, step-by-step algorithm for creating a RESTful API with CRUD operations using MongoDB
+        Atlas and
+        Express.js. Remember to adapt this to your specific project requirements and add features like authentication,
+        authorization, data validation, and error handling for production-ready applications.
+    </p>
+
+
+</body>
+
+</html>
